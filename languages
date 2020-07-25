@@ -1,0 +1,11 @@
+messages:
+  cannot-execute: '&cComplete o captha para executar este comando.'
+chat:
+  correct-captcha: '\n&aVoce completou o captcha, agora voce podera se logar.\n '
+kick:
+  incorrect-captcha: '&c&lKLDEV - LOGIN\n\n&c           Entre novamente e clique no
+    bloco verde. '
+menu:
+  title: '&8Clique no bloco verde'
+  green-block: '&aClique aqui.'
+  gray-block: '&8Clique no bloco verde.'
