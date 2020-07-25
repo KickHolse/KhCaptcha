@@ -18,10 +18,8 @@ options:
 	lang-file: plugins/KhCaptcha/languages.yml
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # captcha
-on join:
-	khcp_captcha(player, "gui")
 on inventory close:
-	if inventory name of player's current inventory is "%{khcp::menu.title}%":
+	if inventory name of player's current inventory is colored {khcp::menu.title}:
 		wait 2 ticks
 		if {x.%player%} is set:
 			khcp_captcha(player, "gui")
@@ -32,18 +30,19 @@ command /captcha [<player>] [<text>]:
 				if arg-2 is "ok":
 					delete {x.%player-arg%}
 					set {captcha.%player-arg%} to false
-					send "%{khcp::cp-correct}%" to player-arg
+					send colored {khcp::cp-correct} to player-arg
+					play sound "ORB_PICKUP" to player-arg with volume 0.5 and pitch 15.0
 					wait 1 tick
 					close player-arg's inventory
 				if arg-2 is "no":
 					delete {x.%player-arg%}
 					close player-arg's inventory
-					kick player-arg due to "%{khcp::kick-msg}%"
+					kick player-arg because colored {khcp::kick-msg}
 					set {captcha.%player-arg%} to false
 on command:
 	if command executor is player:
 		if {x.%player%} is set:
-			send "%{khcp::cannot-msg}%"
+			send colored {khcp::cannot-msg}
 			cancel event
 function khcp_captcha(p: player, cp: text):
 	if {_cp} is "gui":
@@ -52,13 +51,13 @@ function khcp_captcha(p: player, cp: text):
 		set {x.%{_p}%} to a random integer between 0 and 26
 		set {captcha.%{_p}%} to true
 		play sound "CLICK" to {_p} with volume 0.5 and pitch 15.0
-		open chest with 3 row named "%{khcp::menu.title}%" to {_p}
+		open chest with 3 row named colored {khcp::menu.title} to {_p}
 		wait 1 tick
 		set {_c} to 0
 		loop 27 times:
-			format slot {_c} of {_p} with player head with custom nbt "{display:{Name:""%{khcp::menu.gray}%""},SkullOwner:{Id:""87937323-f57b-4850-be40-afad6e8f1de1"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmExN2U5NzAzN2NlMzUzZjg1ZjVjNjVkZjQzNWQyOTQ0OWE4OGRhNDQ0MmU0MzYxY2Y5OWFiYmUxZjg5MmZiIn19fQ==""}]}}}" to run [make console execute "/captcha %{_p}% no"]
+			format slot {_c} of {_p} with player head with custom nbt "{display:{Name:""%colored {khcp::menu.gray}%""},SkullOwner:{Id:""87937323-f57b-4850-be40-afad6e8f1de1"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmExN2U5NzAzN2NlMzUzZjg1ZjVjNjVkZjQzNWQyOTQ0OWE4OGRhNDQ0MmU0MzYxY2Y5OWFiYmUxZjg5MmZiIn19fQ==""}]}}}" to run [make console execute "/captcha %{_p}% no"]
 			add 1 to {_c}
-		format slot {x.%{_p}%} of {_p} with player head with custom nbt "{display:{Name:""%{khcp::menu.green}%""},SkullOwner:{Id:""999e00c2-5909-416f-a7a5-f316064d0940"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDI3Y2E0NmY2YTliYjg5YTI0ZmNhZjRjYzBhY2Y1ZTgyODVhNjZkYjc1MjEzNzhlZDI5MDlhZTQ0OTY5N2YifX19""}]}}}" to run [make console execute "/captcha %{_p}% ok"]
+		format slot {x.%{_p}%} of {_p} with player head with custom nbt "{display:{Name:""%colored {khcp::menu.green}%""},SkullOwner:{Id:""999e00c2-5909-416f-a7a5-f316064d0940"",Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDI3Y2E0NmY2YTliYjg5YTI0ZmNhZjRjYzBhY2Y1ZTgyODVhNjZkYjc1MjEzNzhlZDI5MDlhZTQ0OTY5N2YifX19""}]}}}" to run [make console execute "/captcha %{_p}% ok"]
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # yaml
 function khcaptcha_setvalue(do: text):
@@ -109,9 +108,9 @@ command /khcaptcha [<text = help>]:
 	trigger:
 		if arg 1 is "help":
 			if player has permission "khcaptcha.reload" or "khcaptcha.update" or "khcaptcha.*":
-				send "%nl% &eAjuda - KhCaptcha 1/1%nl%" to player
-				send "  &3/khcaptcha reload &f- &7Recarregar o skript." to player
-				send "" to player
+				send "%nl%  &eAjuda - KhCaptcha 1/1%nl%"
+				send " &3/khcaptcha atualizar &f- &7Atualizar o skript;"
+				send " &3/khcaptcha reload &f- &7Recarregar o skript.%nl% "
 		if arg-1 is "atualizar":
 			if player has permission "khcaptcha.update" or "khcaptcha.*":
 				if {khcp::updater} is true:
@@ -121,7 +120,7 @@ command /khcaptcha [<text = help>]:
 					loop 90 times:
 						add 1 to {_percent2}
 						set {_percent} to {_percent2}/{_percent1}*100
-						set action bar of player to "&aBaixando arquivo.. &8(%{_percent}%%%)"
+						set action bar of player to "&aBaixando arquivo... &8(%{_percent}%%%)"
 						wait a tick
 					set {_sk} to script name
 					delete file "plugins/Skript/scripts/%{_sk}%.sk"
@@ -159,6 +158,7 @@ on load:
 	wait 3 seconds
 	send "&3[Kh:CAPTCHA] &aKhCaptcha &8v{@versao} &aativado!" to console
 on join:
+	khcp_captcha(player, "gui")
 	if text from "https://api.spigotmc.org/legacy/update.php?resource=68755" is not "{@versao}":
 		set {khcp::updater} to true
 		if {khcp::update} is true:
