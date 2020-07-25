@@ -125,7 +125,7 @@ command /khcaptcha [<text = help>]:
 						wait a tick
 					set {_sk} to script name
 					delete file "plugins/Skript/scripts/%{_sk}%.sk"
-					download file from "https://raw.githubusercontent.com/okiwizn/skripts/master/KiwiSkyWars" to file "plugins/Skript/scripts/%{_sk}%.sk"
+					download file from "https://raw.githubusercontent.com/KickHolse/KhCaptcha/master/update" to file "plugins/Skript/scripts/%{_sk}%.sk"
 					reload script "%{_sk}%"
 					play "ORB_PICKUP" to player at volume 1.0
 					set action bar of player to "&aAtualização instalada com sucesso!"
