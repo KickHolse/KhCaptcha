@@ -12,7 +12,7 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 options:
 #	Autor: Kiberzn e Ony | Nome: KhCaptcha
-	versao: 1.6
+	versao: 1.7
 	
 	config-file: plugins/KhCaptcha/config.yml
 	lang-file: plugins/KhCaptcha/languages.yml
@@ -30,6 +30,7 @@ command /captcha [<player>] [<text>]:
 				if arg-2 is "ok":
 					delete {x.%player-arg%}
 					set {captcha.%player-arg%} to false
+					replace all "\n" with newline in {khcp::cp-correct}
 					send colored {khcp::cp-correct} to player-arg
 					play sound "ORB_PICKUP" to player-arg with volume 0.5 and pitch 15.0
 					wait 1 tick
@@ -111,6 +112,8 @@ command /khcaptcha [<text = help>]:
 				send "%nl%  &eAjuda - KhCaptcha 1/1%nl%"
 				send " &3/khcaptcha atualizar &f- &7Atualizar o skript;"
 				send " &3/khcaptcha reload &f- &7Recarregar o skript.%nl% "
+			else:
+				send "&6[KhCaptcha] &7[{@versao}] &f- &7Criado por &aKick Holse&7."
 		if arg-1 is "atualizar":
 			if player has permission "khcaptcha.update" or "khcaptcha.*":
 				if {khcp::updater} is true:
