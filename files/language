@@ -5,7 +5,7 @@ messages:
   cannot-execute: '&cVocê não pode executar comandos antes de completar o captcha.'
   correct-captcha: '\n&aVocê completou o captcha, agora você poderá efetuar o login.\n '
   kick:
-    incorrect-captcha: '&c&lKLDEV - LOGIN\n\n&c               Entre novamente e clique no bloco verde. '
+    incorrect-captcha: '&c&lREDEZN - LOGIN\n\n&c               Entre novamente e clique no bloco verde. '
 menu:
   title: '&8Clique no bloco verde'
   green-block: '&aClique aqui.'
